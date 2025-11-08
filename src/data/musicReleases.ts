@@ -33,7 +33,7 @@ export const musicReleases: TMusicRelease[] = [
         id: "5",
         title: "En cualquier lugar",
         coverUrl: "/images/en-cualquier-lugar.webp",
-        comingSoon: true,
+        externalUrl: "https://www.youtube.com/watch?v=bS1ssbMEhJI",
         size: "small"
     },
 ];
