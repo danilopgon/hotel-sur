@@ -124,11 +124,11 @@ export default function Hero() {
             id='next-release-title'
             className='text-4xl md:text-6xl font-bold uppercase text-primary'
           >
-            Sobre La Gravedad (Parte 1)
+            Sobre La Gravedad
           </h1>
-          <h3 className='text-xl md:text-3xl mt-6 uppercase text-primary'>
-            Ya disponible
-          </h3>
+          <h2 className='text-xl md:text-4xl mt-6 uppercase text-primary'>
+            (Parte 1)
+          </h2>
           <Button
             asChild
             className='mt-8 pointer-events-auto bg-primary hover:bg-primary/90 text-white uppercase font-bold'
