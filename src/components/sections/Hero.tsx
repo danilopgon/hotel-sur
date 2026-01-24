@@ -1,125 +1,144 @@
 'use client';
-import {useEffect, useRef, useState} from 'react';
-import {gsap} from 'gsap';
-import {ScrollTrigger} from 'gsap/ScrollTrigger';
-import {useReduceMotion} from '@/hooks/useReduceMotion';
+import { useIsMobile } from '@/hooks/useIsMobile';
+import { useReduceMotion } from '@/hooks/useReduceMotion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
+import { useEffect, useRef } from 'react';
+import { Button } from '@/components/ui/button';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
-    const wrapperRef = useRef<HTMLDivElement>(null);
-    const videoRef = useRef<HTMLVideoElement>(null);
-    const grainRef = useRef<HTMLDivElement>(null);
-    const textRef = useRef<HTMLDivElement>(null);
-    const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-    const reduceMotion = useReduceMotion();
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const grainRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReduceMotion();
+  const isMobile = useIsMobile();
 
-    useEffect(() => {
-        const wrapper = wrapperRef.current;
-        const video = videoRef.current;
-        const grain = grainRef.current;
-        const text = textRef.current;
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    const image = imageRef.current;
+    const grain = grainRef.current;
+    const text = textRef.current;
 
-        if (!video || !wrapper || !grain || !text) return;
-        if (reduceMotion) return;
+    if (!image || !wrapper || !grain || !text) return;
+    if (reduceMotion) return;
 
-        const onLoaded = () => {
-            setIsVideoLoaded(true);
-            const duration = video.duration || 8;
+    const initialScale = isMobile ? 1.7 : 1.5;
+    const finalScale = isMobile ? 1.3 : 1;
 
-            ScrollTrigger.create({
-                trigger: wrapper,
-                start: 'top top',
-                end: '+=5000',
-                scrub: true,
-                pin: video.parentElement,
-                anticipatePin: 1,
-                onUpdate: (self) => {
-                    if (video.readyState >= 2) {
-                        video.currentTime = self.progress * duration;
-                    }
-                },
-            });
-
-            gsap.fromTo(
-                grain,
-                {opacity: 0.6},
-                {
-                    opacity: 1,
-                    scrollTrigger: {
-                        trigger: text,
-                        start: 'top top',
-                        end: 'top+=800 top',
-                        scrub: true,
-                    },
-                }
-            );
-        };
-
-        if (video.readyState >= 1) {
-            onLoaded();
-        } else {
-            video.addEventListener('loadedmetadata', onLoaded);
-        }
-
-        return () => {
-            ScrollTrigger.getAll().forEach((t) => t.kill());
-        };
-    }, [reduceMotion]);
-
-    return (
-        <section
-            ref={wrapperRef}
-            className='relative h-[350vh]'
-            aria-labelledby='latest-release-title'
-        >
-            <div
-                className='sticky top-0 h-screen w-full overflow-hidden z-0'
-                aria-hidden='true'
-            >
-                <div className='relative h-full w-full'>
-                    <video
-                        ref={videoRef}
-                        src='/videos/tras-la-tormenta.webm'
-                        poster='/images/tras-la-tormenta.webp'
-                        muted
-                        playsInline
-                        preload='auto'
-                        aria-label='Visual del videoclip de Hotel Sur'
-                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-                            isVideoLoaded ? 'opacity-100' : 'opacity-0'
-                        }`}
-                    />
-
-                    <div
-                        ref={grainRef}
-                        className='absolute inset-0 z-10 pointer-events-none mix-blend-soft-light'
-                        aria-hidden='true'
-                        style={{
-                            backgroundImage: "url('/images/ruido.gif')",
-                            backgroundRepeat: 'repeat',
-                        }}
-                    />
-                </div>
-            </div>
-
-            <div
-                className='sticky top-0 w-full h-screen flex justify-end items-end p-6 md:p-12 z-30 pointer-events-none'>
-                <div
-                    ref={textRef}
-                    className='pb-16 md:pb-24 text-right text-white drop-shadow-lg'
-                >
-                    <h1
-                        id='next-release-title'
-                        className='text-4xl md:text-7xl font-bold uppercase'
-                    >
-                        Sobre La Gravedad
-                    </h1>
-                    <h3 className='text-xl md:text-2xl mt-4 uppercase'>
-                        Segundo LP de Hotel Sur, muy pronto.
-                    </h3>
-                </div>
-            </div>
-        </section>
+    gsap.fromTo(
+      image,
+      {
+        y: '0%',
+        scale: initialScale,
+      },
+      {
+        y: '0',
+        scale: finalScale,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: wrapper,
+          start: 'middle top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      },
     );
+
+    gsap.fromTo(
+      grain,
+      { opacity: 0.6 },
+      {
+        opacity: 1,
+        scrollTrigger: {
+          trigger: wrapper,
+          start: 'top top',
+          end: 'center top',
+          scrub: true,
+        },
+      },
+    );
+
+    gsap.fromTo(
+      text,
+      { opacity: 0, y: 50, scale: 0.8 },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: wrapper,
+          start: 'top bottom-=200',
+          end: 'top top',
+          scrub: true,
+        },
+      },
+    );
+
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
+  }, [reduceMotion, isMobile]);
+
+  return (
+    <section
+      ref={wrapperRef}
+      className='relative h-[200vh]'
+      aria-labelledby='latest-release-title'
+    >
+      <div className='sticky top-0 h-screen w-full overflow-hidden z-0'>
+        <div
+          ref={imageRef}
+          className='absolute inset-0 w-full h-full'
+          style={{ transformOrigin: 'center center' }}
+        >
+          <Image
+            src='/images/portada-sobre-la-gravedad.webp'
+            alt='Portada Sobre La Gravedad'
+            fill
+            priority
+            className='object-cover object-center'
+            sizes='100vw'
+          />
+        </div>
+
+        <div
+          ref={grainRef}
+          className='absolute inset-0 z-10 pointer-events-none mix-blend-soft-light'
+          aria-hidden='true'
+          style={{
+            backgroundImage: "url('/images/ruido.gif')",
+            backgroundRepeat: 'repeat',
+          }}
+        />
+      </div>
+
+      <div className='sticky top-0 w-full h-screen flex justify-center items-center p-6 md:p-12 z-30 pointer-events-none'>
+        <div ref={textRef} className='text-center drop-shadow-lg'>
+          <h1
+            id='next-release-title'
+            className='text-4xl md:text-6xl font-bold uppercase text-primary'
+          >
+            Sobre La Gravedad (Parte 1)
+          </h1>
+          <h3 className='text-xl md:text-3xl mt-6 uppercase text-primary'>
+            Ya disponible
+          </h3>
+          <Button
+            asChild
+            className='mt-8 pointer-events-auto bg-primary hover:bg-primary/90 text-white uppercase font-bold'
+          >
+            <a href='https://open.spotify.com/album/0KLgirssQr2u2wNDnaOOKb' target='_blank' rel='noopener noreferrer'>
+              Escuchar ahora
+            </a>
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
 }
