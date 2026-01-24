@@ -1,7 +1,7 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useRef, useState } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,14 +26,22 @@ export default function AboutUs() {
 
   useEffect(() => {
     const reduceMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
+      '(prefers-reduced-motion: reduce)',
     ).matches;
-    if (reduceMotion || isMobile) return;
+
+    if (reduceMotion || isMobile) {
+      [titleRef, p1Ref, p2Ref, spotifyRef].forEach((ref) => {
+        if (ref.current) {
+          gsap.set(ref.current, { clearProps: 'all' });
+        }
+      });
+      return;
+    }
 
     const animateOnScroll = (
       el: React.RefObject<HTMLElement | null>,
       start = 'top bottom',
-      end = 'top center'
+      end = 'top center',
     ) => {
       if (!el.current) return;
       gsap.fromTo(
@@ -49,7 +57,7 @@ export default function AboutUs() {
             end,
             scrub: true,
           },
-        }
+        },
       );
     };
 

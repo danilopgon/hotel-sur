@@ -1,10 +1,10 @@
 'use client';
-import {useEffect, useRef, useState} from 'react';
-import {Button} from '@/components/ui/button';
-import {gsap} from 'gsap';
-import {ScrollTrigger} from 'gsap/ScrollTrigger';
-import {useReduceMotion} from '@/hooks/useReduceMotion';
-import {merchProducts} from "@/data/merchProducts";
+import { Button } from '@/components/ui/button';
+import { merchProducts } from '@/data/merchProducts';
+import { useReduceMotion } from '@/hooks/useReduceMotion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useRef, useState } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,11 +24,18 @@ export default function Shop() {
   }, []);
 
   useEffect(() => {
-    if (reduceMotion || isMobile) return;
+    if (reduceMotion || isMobile) {
+      [titleRef, contentRef, bentoRef, bgRef].forEach((ref) => {
+        if (ref.current) {
+          gsap.set(ref.current, { clearProps: 'all' });
+        }
+      });
+      return;
+    }
 
     const fadeUp = (
       ref: React.RefObject<HTMLDivElement | null>,
-      startOffset = 'top 80%'
+      startOffset = 'top 80%',
     ) => {
       if (!ref.current) return;
       gsap.fromTo(
@@ -44,7 +51,7 @@ export default function Shop() {
             end: 'top center',
             scrub: true,
           },
-        }
+        },
       );
     };
 
@@ -59,7 +66,7 @@ export default function Shop() {
           end: 'bottom top',
           scrub: true,
         },
-      }
+      },
     );
 
     fadeUp(titleRef);
@@ -68,7 +75,10 @@ export default function Shop() {
   }, [isMobile, reduceMotion]);
 
   return (
-    <section aria-labelledby='shop-title' className='relative min-h-screen overflow-hidden'>
+    <section
+      aria-labelledby='shop-title'
+      className='relative min-h-screen overflow-hidden'
+    >
       <div ref={bgRef} className='absolute inset-0 bg-neutral-900 z-0'></div>
 
       <div className='relative z-10 min-h-screen flex flex-col justify-center items-center p-6 md:p-12'>
