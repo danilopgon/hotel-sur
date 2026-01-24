@@ -133,7 +133,11 @@ export default function Hero() {
             asChild
             className='mt-8 pointer-events-auto bg-primary hover:bg-primary/90 text-white uppercase font-bold'
           >
-            <a href='https://open.spotify.com/album/0KLgirssQr2u2wNDnaOOKb' target='_blank' rel='noopener noreferrer'>
+            <a
+              href='https://open.spotify.com/album/0KLgirssQr2u2wNDnaOOKb'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
               Escuchar ahora
             </a>
           </Button>
