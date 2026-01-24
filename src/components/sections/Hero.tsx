@@ -1,11 +1,11 @@
 'use client';
+import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
-import { Button } from '@/components/ui/button';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,22 +26,23 @@ export default function Hero() {
     if (!image || !wrapper || !grain || !text) return;
     if (reduceMotion) return;
 
-    const initialScale = isMobile ? 1.7 : 1.5;
-    const finalScale = isMobile ? 1.3 : 1;
+    const initialScale = isMobile ? 1.7 : 1.3;
 
     gsap.fromTo(
       image,
       {
-        y: '0%',
+        y: '-5%',
         scale: initialScale,
+        filter: 'blur(0px)',
       },
       {
-        y: '0',
-        scale: finalScale,
+        y: '5%',
+        scale: 1.15,
+        filter: 'blur(12px)',
         ease: 'none',
         scrollTrigger: {
           trigger: wrapper,
-          start: 'middle top',
+          start: 'top top',
           end: 'bottom top',
           scrub: true,
         },
@@ -52,7 +53,7 @@ export default function Hero() {
       grain,
       { opacity: 0.6 },
       {
-        opacity: 1,
+        opacity: 0.8,
         scrollTrigger: {
           trigger: wrapper,
           start: 'top top',
@@ -64,21 +65,27 @@ export default function Hero() {
 
     gsap.fromTo(
       text,
-      { opacity: 0, y: 50, scale: 0.8 },
+      { opacity: 0, y: 50, scale: 0.9 },
       {
         opacity: 1,
         y: 0,
         scale: 1,
-        duration: 1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: wrapper,
-          start: 'top bottom-=200',
-          end: 'top top',
-          scrub: true,
-        },
+        duration: 1.5,
+        ease: 'power3.out',
+        delay: 0.2,
       },
     );
+
+    gsap.to(text, {
+      y: -150,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: wrapper,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true,
+      },
+    });
 
     return () => {
       ScrollTrigger.getAll().forEach((t) => t.kill());
@@ -88,7 +95,7 @@ export default function Hero() {
   return (
     <section
       ref={wrapperRef}
-      className='relative h-[200vh]'
+      className='relative h-[250vh]'
       aria-labelledby='latest-release-title'
     >
       <div className='sticky top-0 h-screen w-full overflow-hidden z-0'>
