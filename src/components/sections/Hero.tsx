@@ -11,7 +11,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
+  const backgroundRef = useRef<HTMLDivElement>(null);
+  const sphereRef = useRef<HTMLDivElement>(null);
+  const cloudRef = useRef<HTMLDivElement>(null);
   const grainRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReduceMotion();
@@ -19,18 +21,20 @@ export default function Hero() {
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
-    const image = imageRef.current;
+    const background = backgroundRef.current;
+    const sphere = sphereRef.current;
+    const cloud = cloudRef.current;
     const grain = grainRef.current;
     const text = textRef.current;
 
-    if (!image || !wrapper || !grain || !text) return;
+    if (!background || !sphere || !wrapper || !grain || !text) return;
     if (reduceMotion) return;
 
     const initialScale = isMobile ? 1.7 : 1.3;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        image,
+        background,
         {
           y: '-5%',
           scale: initialScale,
@@ -51,10 +55,51 @@ export default function Hero() {
       );
 
       gsap.fromTo(
+        sphere,
+        {
+          scale: 1,
+          filter: 'blur(0px)',
+        },
+        {
+          y: '5%',
+          scale: initialScale,
+          filter: 'blur(20px)',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: wrapper,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
+        },
+      );
+
+      gsap.fromTo(
+        cloud,
+        {
+          y: '-5%',
+          scale: initialScale,
+          filter: 'blur(0px)',
+        },
+        {
+          y: '0%',
+          scale: 1,
+          filter: 'blur(5px)',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: wrapper,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
+        },
+      );
+
+      gsap.fromTo(
         grain,
         { opacity: 0.6 },
         {
-          opacity: 0.8,
+          opacity: 0.9,
           scrollTrigger: {
             trigger: wrapper,
             start: 'top top',
@@ -100,13 +145,43 @@ export default function Hero() {
     >
       <div className='sticky top-0 h-screen w-full overflow-hidden z-0'>
         <div
-          ref={imageRef}
+          ref={backgroundRef}
           className='absolute inset-0 w-full h-full'
           style={{ transformOrigin: 'center center' }}
         >
           <Image
-            src='/images/portada-sobre-la-gravedad.webp'
-            alt='Portada Sobre La Gravedad'
+            src='/images/fondo-hero.webp'
+            alt='Fondo Portada Sobre La Gravedad'
+            fill
+            priority
+            className='object-cover object-center'
+            sizes='100vw'
+          />
+        </div>
+
+        <div
+          ref={sphereRef}
+          className='absolute inset-0 z-10 w-full h-full'
+          style={{ transformOrigin: 'center center' }}
+        >
+          <Image
+            src='/images/esfera-hero.webp'
+            alt='Esfera Portada Sobre La Gravedad'
+            fill
+            priority
+            className='object-cover object-center'
+            sizes='100vw'
+          />
+        </div>
+
+        <div
+          ref={cloudRef}
+          className='absolute inset-0 z-40 w-full h-full'
+          style={{ transformOrigin: 'center center' }}
+        >
+          <Image
+            src='/images/nubes-hero.webp'
+            alt='Nubes Portada Sobre La Gravedad'
             fill
             priority
             className='object-cover object-center'
@@ -116,7 +191,7 @@ export default function Hero() {
 
         <div
           ref={grainRef}
-          className='absolute inset-0 z-10 pointer-events-none mix-blend-soft-light'
+          className='absolute inset-0 z-50 pointer-events-none mix-blend-overlay'
           aria-hidden='true'
           style={{
             backgroundImage: "url('/images/ruido.gif')",
