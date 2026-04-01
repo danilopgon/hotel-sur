@@ -10,7 +10,7 @@ export default function Releases() {
       <div className='relative z-10 min-h-screen flex flex-col justify-center items-center p-6 py-12 md:p-12'>
         <h2
           id='releases-title'
-          className='text-3xl md:text-6xl font-bold text-primary mb-4 pb-2 uppercase tracking-tight'
+          className='text-3xl md:text-6xl font-bold text-primary mb-4 md:mb-8 pb-2 uppercase tracking-tight'
         >
           Singles de &quot;Sobre la Gravedad&quot;
         </h2>

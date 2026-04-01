@@ -69,14 +69,14 @@ export default function AboutUs() {
         <h2
           ref={titleRef}
           id='about-title'
-          className='text-3xl md:text-6xl font-bold text-primary mb-8 pb-4 uppercase'
+          className='text-3xl md:text-6xl font-bold text-primary mb-4 md:mb-8 uppercase text-left max-w-4xl w-full'
         >
-          Sobre nosotros
+          Hotel Sur
         </h2>
 
         <div
           ref={p1Ref}
-          className='text-xl md:text-2xl text-neutral-900 max-w-3xl text-left mb-8 text-balance'
+          className='text-xl md:text-2xl text-neutral-900 max-w-4xl text-left mb-8 text-balance w-full'
         >
           <p className='mb-6'>
             Hotel Sur cruza rock alternativo y electrónica con un enfoque
@@ -93,14 +93,14 @@ export default function AboutUs() {
 
         <p
           ref={p2Ref}
-          className='text-md md:text-lg text-neutral-900 max-w-2xl text-center'
+          className='text-md md:text-lg text-neutral-900 max-w-4xl text-left w-full'
         >
           Escucha nuestros temas en Spotify:
         </p>
 
         <div
           ref={spotifyRef}
-          className='w-full max-w-3xl mt-8 mb-16 md:mb-8'
+          className='w-full max-w-4xl mt-8 mb-16 md:mb-8'
           aria-label='Reproductor de Spotify'
         >
           <iframe

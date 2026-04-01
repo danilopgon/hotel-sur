@@ -82,7 +82,7 @@ export default function Shop() {
         <h2
           ref={titleRef}
           id='shop-title'
-          className='text-3xl md:text-6xl font-bold text-primary pb-4 uppercase'
+          className='text-3xl md:text-6xl font-bold text-primary pb-4 uppercase max-w-4xl w-full text-center'
         >
           Merchandising
         </h2>
@@ -90,12 +90,12 @@ export default function Shop() {
         <p
           ref={contentRef}
           id='shop-description'
-          className='text-xl md:text-2xl text-neutral-900 max-w-2xl text-center mb-8'
+          className='text-xl md:text-2xl text-neutral-900 max-w-4xl text-center mb-8 w-full'
         >
           Productos exclusivos de Hotel Sur
         </p>
 
-        <div ref={bentoRef} className='w-full max-w-5xl'>
+        <div ref={bentoRef} className='w-full max-w-7xl'>
           <div className='grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4'>
             {merchProducts.map((product) => (
               <article

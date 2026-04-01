@@ -111,9 +111,10 @@ export default function Hero() {
 
       gsap.fromTo(
         text,
-        { opacity: 0, y: 50, scale: 0.9 },
+        { opacity: 0, y: 50, scale: 0.9, filter: 'blur(10px)' },
         {
           opacity: 1,
+          filter: 'blur(0px)',
           y: 0,
           scale: 1,
           duration: 1.5,
@@ -201,14 +202,14 @@ export default function Hero() {
       </div>
 
       <div className='sticky top-0 w-full h-screen flex justify-center items-center p-6 md:p-12 z-30 pointer-events-none'>
-        <div ref={textRef} className='text-center drop-shadow-lg'>
+        <div ref={textRef} className='text-center'>
           <h1
             id='hero-title'
-            className='text-4xl md:text-6xl font-bold uppercase text-primary'
+            className='text-4xl md:text-6xl 2xl:text-9xl font-bold uppercase text-primary'
           >
             Sobre La Gravedad
           </h1>
-          <h2 className='text-xl md:text-4xl mt-6 uppercase text-primary'>
+          <h2 className='text-xl md:text-4xl 2xl:text-6xl mt-6 uppercase text-primary'>
             (Parte 1)
           </h2>
           <Button

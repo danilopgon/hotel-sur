@@ -19,7 +19,7 @@
   --font-family-bold: 'Eurostile-Bold', sans-serif;
   --font-size: 16px;
   --line-height: 1.5;
-  --letter-spacing: 0.25rem;
+  --letter-spacing: 0.2rem;
   --radius: 0.625rem;
 
   /* Mapeo de variables de Shadcn a nuestras variables base */
