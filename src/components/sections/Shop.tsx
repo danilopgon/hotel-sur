@@ -90,7 +90,7 @@ export default function Shop() {
         <p
           ref={contentRef}
           id='shop-description'
-          className='text-xl md:text-2xl text-primary max-w-2xl text-center mb-8'
+          className='text-xl md:text-2xl text-neutral-900 max-w-2xl text-center mb-8'
         >
           Productos exclusivos de Hotel Sur
         </p>
