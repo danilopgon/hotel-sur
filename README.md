@@ -6,7 +6,9 @@ Este es el repositorio del sitio web oficial de Hotel Sur, banda de rock y elect
 
 ## Sobre Hotel Sur
 
-Hotel Sur es un proyecto musical fundado en 2019 que fusiona rock alternativo y electrónica con una identidad propia. Su sonido viaja entre el post-punk, el rock psicodélico y la electrónica más experimental, tejiendo paisajes sonoros envolventes y letras cargadas de emoción y pensamiento crítico. Actualmente, la banda se encuentra inmersa en el lanzamiento de su segundo LP.
+Hotel Sur es un proyecto musical fundado en 2019 que fusiona rock alternativo y electrónica con un enfoque cinematográfico: atmósferas densas, groove y canciones construidas por capas entre banda y electrónica en vivo.
+
+Su segundo trabajo, "Sobre la Gravedad (Parte 1)", explora la pérdida en sus distintas formas a través de nueve canciones con narrativa propia. El primero de un proyecto en dos entregas. La Parte 2 está en desarrollo.
 
 ## Características del sitio
 
@@ -14,11 +16,11 @@ Hotel Sur es un proyecto musical fundado en 2019 que fusiona rock alternativo y 
 - **Secciones informativas**: Sobre la banda, discografía, próximos conciertos y novedades
 - **Formulario de contacto**: Para comunicación directa con el grupo o solicitudes de booking
 - **Integración con plataformas**: Enlaces directos a plataformas de streaming.
-- **Conexión con tienda en Fourthwall**: Acceso a la tienda oficial de la banda para adquirir merchandising y discos.
+- **Conexión con tienda en Fourthwall**: Acceso a la tienda oficial de la banda para adquirir merchandising.
 
 ## Tecnologías utilizadas
 
-Este sitio está desarrollado con Next.js, React, Tailwind CSS y componentes de UI personalizados basados en shadcn/ui.
+Este sitio está desarrollado con Next.js, React, Tailwind CSS y componentes de UI personalizados basados en shadcn/ui. Usa GSAP/Lenis para animaciones y efectos visuales.
 
 ## Contacto
 
