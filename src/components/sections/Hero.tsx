@@ -28,17 +28,57 @@ export default function Hero() {
 
     const initialScale = isMobile ? 1.7 : 1.3;
 
-    gsap.fromTo(
-      image,
-      {
-        y: '-5%',
-        scale: initialScale,
-        filter: 'blur(0px)',
-      },
-      {
-        y: '5%',
-        scale: 1.15,
-        filter: 'blur(12px)',
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        image,
+        {
+          y: '-5%',
+          scale: initialScale,
+          filter: 'blur(0px)',
+        },
+        {
+          y: '5%',
+          scale: 1.15,
+          filter: 'blur(12px)',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: wrapper,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
+        },
+      );
+
+      gsap.fromTo(
+        grain,
+        { opacity: 0.6 },
+        {
+          opacity: 0.8,
+          scrollTrigger: {
+            trigger: wrapper,
+            start: 'top top',
+            end: 'center top',
+            scrub: true,
+          },
+        },
+      );
+
+      gsap.fromTo(
+        text,
+        { opacity: 0, y: 50, scale: 0.9 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1.5,
+          ease: 'power3.out',
+          delay: 0.2,
+        },
+      );
+
+      gsap.to(text, {
+        y: -150,
         ease: 'none',
         scrollTrigger: {
           trigger: wrapper,
@@ -46,57 +86,17 @@ export default function Hero() {
           end: 'bottom top',
           scrub: true,
         },
-      },
-    );
+      });
+    }, wrapperRef);
 
-    gsap.fromTo(
-      grain,
-      { opacity: 0.6 },
-      {
-        opacity: 0.8,
-        scrollTrigger: {
-          trigger: wrapper,
-          start: 'top top',
-          end: 'center top',
-          scrub: true,
-        },
-      },
-    );
-
-    gsap.fromTo(
-      text,
-      { opacity: 0, y: 50, scale: 0.9 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 1.5,
-        ease: 'power3.out',
-        delay: 0.2,
-      },
-    );
-
-    gsap.to(text, {
-      y: -150,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: wrapper,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      },
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-    };
+    return () => ctx.revert();
   }, [reduceMotion, isMobile]);
 
   return (
     <section
       ref={wrapperRef}
       className='relative h-[250vh]'
-      aria-labelledby='latest-release-title'
+      aria-labelledby='hero-title'
     >
       <div className='sticky top-0 h-screen w-full overflow-hidden z-0'>
         <div
@@ -128,7 +128,7 @@ export default function Hero() {
       <div className='sticky top-0 w-full h-screen flex justify-center items-center p-6 md:p-12 z-30 pointer-events-none'>
         <div ref={textRef} className='text-center drop-shadow-lg'>
           <h1
-            id='next-release-title'
+            id='hero-title'
             className='text-4xl md:text-6xl font-bold uppercase text-primary'
           >
             Sobre La Gravedad

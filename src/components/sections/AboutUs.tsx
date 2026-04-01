@@ -1,34 +1,22 @@
 'use client';
+import { useIsMobile } from '@/hooks/useIsMobile';
+import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function AboutUs() {
+  const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
-  const p1Ref = useRef<HTMLParagraphElement | null>(null);
+  const p1Ref = useRef<HTMLDivElement | null>(null);
   const p2Ref = useRef<HTMLParagraphElement | null>(null);
   const spotifyRef = useRef<HTMLDivElement | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const reduceMotion = useReduceMotion();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    return () => {
-      window.removeEventListener('resize', checkIsMobile);
-    };
-  }, []);
-
-  useEffect(() => {
-    const reduceMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches;
-
     if (reduceMotion || isMobile) {
       [titleRef, p1Ref, p2Ref, spotifyRef].forEach((ref) => {
         if (ref.current) {
@@ -38,42 +26,45 @@ export default function AboutUs() {
       return;
     }
 
-    const animateOnScroll = (
-      el: React.RefObject<HTMLElement | null>,
-      start = 'top bottom',
-      end = 'top center',
-    ) => {
-      if (!el.current) return;
-      gsap.fromTo(
-        el.current,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: el.current,
-            start,
-            end,
-            scrub: true,
+    const ctx = gsap.context(() => {
+      const animateOnScroll = (
+        el: HTMLElement | null,
+        start = 'top bottom',
+        end = 'top center',
+      ) => {
+        if (!el) return;
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: el,
+              start,
+              end,
+              scrub: true,
+            },
           },
-        },
-      );
-    };
+        );
+      };
 
-    animateOnScroll(titleRef);
-    animateOnScroll(p1Ref);
-    animateOnScroll(p2Ref);
-    animateOnScroll(spotifyRef);
-  }, [isMobile]);
+      animateOnScroll(titleRef.current);
+      animateOnScroll(p1Ref.current);
+      animateOnScroll(p2Ref.current);
+      animateOnScroll(spotifyRef.current);
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [isMobile, reduceMotion]);
 
   return (
     <section
+      ref={sectionRef}
       className='relative min-h-screen bg-neutral-0'
       aria-labelledby='about-title'
     >
-      <div className='absolute inset-0 z-0'></div>
-
       <div className='relative z-10 min-h-screen flex flex-col justify-center items-center p-6 py-12 md:p-12'>
         <h2
           ref={titleRef}
@@ -83,17 +74,22 @@ export default function AboutUs() {
           Sobre nosotros
         </h2>
 
-        <p
+        <div
           ref={p1Ref}
           className='text-xl md:text-2xl text-neutral-900 max-w-3xl text-left mb-8 text-balance'
         >
-          Hotel Sur es un proyecto musical fundado en 2019 que fusiona rock
-          alternativo y electrónica con una identidad propia. Su sonido viaja
-          entre el post-punk y la electrónica más experimental, tejiendo
-          paisajes sonoros envolventes y letras cargadas de emoción y
-          pensamiento crítico. Actualmente, la banda se encuentra inmersa en el
-          lanzamiento de su segundo LP.
-        </p>
+          <p className='mb-6'>
+            Hotel Sur cruza rock alternativo y electrónica con un enfoque
+            cinematográfico: atmósferas densas, groove y canciones construidas
+            por capas entre banda y electrónica en vivo.
+          </p>
+          <p>
+            Su segundo trabajo, &quot;Sobre la Gravedad (Parte 1)&quot;, explora
+            la pérdida en sus distintas formas a través de nueve canciones con
+            narrativa propia. El primero de un proyecto en dos entregas. La
+            Parte 2 está en desarrollo.
+          </p>
+        </div>
 
         <p
           ref={p2Ref}

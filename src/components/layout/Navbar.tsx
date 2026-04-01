@@ -104,7 +104,9 @@ export default function Navbar() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className='flex flex-col justify-center items-center md:hidden text-primary relative h-6 w-6'
-            aria-label='Toggle menu'
+            aria-label='Menú de navegación'
+            aria-expanded={isOpen}
+            aria-controls='mobile-menu'
           >
             <span
               className={`absolute block w-6 h-0.5 bg-primary transition-all duration-300 ease-out ${
@@ -177,10 +179,12 @@ export default function Navbar() {
       </div>
 
       {isMobile && (
-        <div
+        <nav
+          id='mobile-menu'
           ref={mobileMenuRef}
           className='overflow-hidden absolute w-full bg-neutral-800/95 backdrop-blur-sm shadow-lg'
           style={{ height: 0, opacity: 0, display: 'none' }}
+          aria-label='Navegación móvil'
         >
           <ul className='flex flex-col py-4 px-6 space-y-4'>
             {navItems.map((item) => (
@@ -229,7 +233,7 @@ export default function Navbar() {
               </a>
             </li>
           </ul>
-        </div>
+        </nav>
       )}
     </div>
   );

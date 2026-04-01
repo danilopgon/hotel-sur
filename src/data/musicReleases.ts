@@ -6,7 +6,8 @@ export const musicReleases: TMusicRelease[] = [
         title: "Ventolín",
         coverUrl: "/images/ventolin.webp",
         externalUrl: "https://www.youtube.com/watch?v=86mZ53mfDLI",
-        size: "large"
+        size: "large",
+        animationCredit: "Julia Battaner (España)"
     },
     {
         id: "2",
@@ -20,7 +21,8 @@ export const musicReleases: TMusicRelease[] = [
         title: "Aguas Rojas I",
         coverUrl: "/images/aguas-rojas.webp",
         externalUrl: "https://www.youtube.com/watch?v=yH9zPrDJ3JM",
-        size: "medium"
+        size: "medium",
+        animationCredit: "Binadra (Polonia)"
     },
     {
         id: "4",

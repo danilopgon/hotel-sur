@@ -117,6 +117,12 @@ export function ReleaseCard({release}: CardProps) {
                         <span className="sr-only">Reproducir {release.title}</span>
                     </div>
                 )}
+
+                {release.animationCredit && (
+                    <p className="mt-2 text-xs text-white/60">
+                        Animación: {release.animationCredit}
+                    </p>
+                )}
             </div>
         </div>
     );

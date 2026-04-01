@@ -5,4 +5,5 @@ export type TMusicRelease = {
     externalUrl?: string;
     comingSoon?: boolean;
     size: "small" | "medium" | "large";
+    animationCredit?: string;
 }

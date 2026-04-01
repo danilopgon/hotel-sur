@@ -1,27 +1,22 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { merchProducts } from '@/data/merchProducts';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Shop() {
+  const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const bentoRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReduceMotion();
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkIsMobile = () => setIsMobile(window.innerWidth < 768);
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    return () => window.removeEventListener('resize', checkIsMobile);
-  }, []);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (reduceMotion || isMobile) {
@@ -33,59 +28,61 @@ export default function Shop() {
       return;
     }
 
-    const fadeUp = (
-      ref: React.RefObject<HTMLDivElement | null>,
-      startOffset = 'top 80%',
-    ) => {
-      if (!ref.current) return;
+    const ctx = gsap.context(() => {
+      const fadeUp = (el: HTMLElement | null, startOffset = 'top 80%') => {
+        if (!el) return;
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: el,
+              start: startOffset,
+              end: 'top center',
+              scrub: true,
+            },
+          },
+        );
+      };
+
       gsap.fromTo(
-        ref.current,
-        { opacity: 0, y: 50 },
+        bgRef.current,
+        { scale: 1.05 },
         {
-          opacity: 1,
-          y: 0,
-          ease: 'none',
+          scale: 1,
           scrollTrigger: {
-            trigger: ref.current,
-            start: startOffset,
-            end: 'top center',
+            trigger: bgRef.current,
+            start: 'top top',
+            end: 'bottom top',
             scrub: true,
           },
         },
       );
-    };
 
-    gsap.fromTo(
-      bgRef.current,
-      { scale: 1.05 },
-      {
-        scale: 1,
-        scrollTrigger: {
-          trigger: bgRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        },
-      },
-    );
+      fadeUp(titleRef.current);
+      fadeUp(contentRef.current, 'top 75%');
+      fadeUp(bentoRef.current, 'top 70%');
+    }, sectionRef);
 
-    fadeUp(titleRef);
-    fadeUp(contentRef, 'top 75%');
-    fadeUp(bentoRef, 'top 70%');
+    return () => ctx.revert();
   }, [isMobile, reduceMotion]);
 
   return (
     <section
+      ref={sectionRef}
       aria-labelledby='shop-title'
       className='relative min-h-screen overflow-hidden'
     >
-      <div ref={bgRef} className='absolute inset-0 bg-neutral-900 z-0'></div>
+      <div ref={bgRef} className='absolute inset-0 bg-neutral-50 z-0'></div>
 
-      <div className='relative z-10 min-h-screen flex flex-col justify-center items-center p-6 md:p-12'>
+      <div className='relative z-10 min-h-screen flex flex-col justify-center items-center p-4 md:p-12'>
         <h2
           ref={titleRef}
           id='shop-title'
-          className='text-2xl md:text-4xl font-bold text-neutral-0 mb-4 uppercase mt-6 md:mt-0'
+          className='text-3xl md:text-6xl font-bold text-primary pb-4 uppercase'
         >
           Merchandising
         </h2>
@@ -93,7 +90,7 @@ export default function Shop() {
         <p
           ref={contentRef}
           id='shop-description'
-          className='text-xl md:text-2xl text-neutral-0 max-w-2xl text-center mb-8'
+          className='text-xl md:text-2xl text-primary max-w-2xl text-center mb-8'
         >
           Productos exclusivos de Hotel Sur
         </p>
@@ -146,7 +143,7 @@ export default function Shop() {
             ))}
           </div>
 
-          <div className='mt-12 text-center'>
+          <div className='mt-4 md:mt-12 text-center'>
             <a
               href='https://tienda.hotelsur.es'
               target='_blank'

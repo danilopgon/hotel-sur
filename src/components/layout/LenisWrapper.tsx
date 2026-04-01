@@ -11,6 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function LenisWrapper({ children }: { children: ReactNode }) {
   const reduceMotion = useReduceMotion();
   const lenisRef = useRef<Lenis | null>(null);
+  const rafId = useRef<number>(0);
 
   useEffect(() => {
     if (reduceMotion) return;
@@ -26,38 +27,18 @@ export default function LenisWrapper({ children }: { children: ReactNode }) {
 
     lenisRef.current = lenis;
 
-    const raf = (time: number) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
-    requestAnimationFrame(raf);
-
     lenis.on('scroll', ScrollTrigger.update);
 
-    ScrollTrigger.scrollerProxy(document.body, {
-      scrollTop(value) {
-        if (value !== undefined) {
-          lenis.scrollTo(value);
-        }
-        return lenis.scroll.instance.scroll.y;
-      },
-      getBoundingClientRect() {
-        return {
-          top: 0,
-          left: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        };
-      },
-    });
+    const raf = (time: number) => {
+      lenis.raf(time);
+      rafId.current = requestAnimationFrame(raf);
+    };
+    rafId.current = requestAnimationFrame(raf);
 
-    ScrollTrigger.defaults({ scroller: document.body });
-
-    setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 0);
+    ScrollTrigger.refresh();
 
     return () => {
+      cancelAnimationFrame(rafId.current);
       lenis.destroy();
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
