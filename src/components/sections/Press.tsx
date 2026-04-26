@@ -89,26 +89,33 @@ export default function Press() {
         <h2
           ref={titleRef}
           id='press-title'
-          className='text-3xl md:text-6xl font-bold text-primary mb-12 uppercase'
+          className='text-3xl md:text-6xl font-bold text-primary mb-2 uppercase'
         >
           Prensa
         </h2>
 
-        <ul className='space-y-10'>
+        <ul className='mt-16 divide-y divide-neutral-800'>
           {pressQuotes.map(({ quote, source, date }, i) => (
             <li
               key={source}
               ref={(el) => {
                 quotesRef.current[i] = el;
               }}
-              className='border-l-2 border-primary pl-6'
+              className='py-10 md:py-12'
             >
-              <blockquote className='text-xl md:text-2xl text-neutral-100 mb-3'>
-                &ldquo;{quote}&rdquo;
-              </blockquote>
-              <cite className='not-italic text-sm md:text-base text-neutral-400 uppercase tracking-wide'>
-                — {source}, {date}
-              </cite>
+              <div className='flex flex-col md:grid md:grid-cols-[1fr_180px] gap-6 md:gap-12'>
+                <blockquote className='text-xl md:text-2xl text-neutral-100 leading-relaxed'>
+                  &ldquo;{quote}&rdquo;
+                </blockquote>
+                <cite className='not-italic flex flex-col gap-1 md:text-right md:self-end shrink-0'>
+                  <span className='text-sm font-bold uppercase tracking-widest text-primary'>
+                    {source}
+                  </span>
+                  <span className='text-xs text-neutral-500 uppercase tracking-wide'>
+                    {date}
+                  </span>
+                </cite>
+              </div>
             </li>
           ))}
         </ul>
