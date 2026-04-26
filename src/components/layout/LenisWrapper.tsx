@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode, useEffect, useRef } from 'react';
-import Lenis from '@studio-freight/lenis';
+import Lenis from 'lenis';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import gsap from 'gsap';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
