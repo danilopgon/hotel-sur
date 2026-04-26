@@ -3,12 +3,12 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className='relative z-10 bg-neutral-900 text-neutral-50 py-12 mt-0'>
+    <footer className='relative z-10 bg-neutral-0 text-neutral-900 py-12 mt-0'>
       <div className='container mx-auto px-4'>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
           <div>
             <h3 className='text-xl font-bold mb-4 text-primary'>HOTEL SUR</h3>
-            <p className='text-neutral-50'>
+            <p className='text-neutral-700'>
               Banda de rock alternativo y electrónica. Cuenca, España.
             </p>
             <div className='mt-4 flex space-x-4'>
@@ -78,7 +78,7 @@ export default function Footer() {
 
           <div>
             <h3 className='text-xl font-bold mb-4'>Contacto</h3>
-            <p className='text-neutral-50'>
+            <p className='text-neutral-700'>
               Para contrataciones y colaboraciones:
             </p>
             <a
@@ -90,7 +90,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className='border-t border-primary mt-12 pt-8 text-center text-sm text-neutral-50'>
+        <div className='border-t border-primary mt-12 pt-8 text-center text-sm text-neutral-700'>
           <p>
             © {new Date().getFullYear()} Hotel Sur. Todos los derechos
             reservados.
