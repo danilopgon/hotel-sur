@@ -93,7 +93,7 @@ export default function Navbar() {
   return (
     <div
       ref={navbarRef}
-      className='fixed top-0 left-0 right-0 backdrop-blur-sm bg-neutral-700/80 opacity-100 z-50'
+      className='fixed top-0 left-0 right-0 backdrop-blur-sm bg-neutral-900/90 opacity-100 z-50'
     >
       <div className='container mx-auto flex justify-between items-center p-4'>
         <Link href='/'>
@@ -182,7 +182,7 @@ export default function Navbar() {
         <nav
           id='mobile-menu'
           ref={mobileMenuRef}
-          className='overflow-hidden absolute w-full bg-neutral-800/95 backdrop-blur-sm shadow-lg'
+          className='overflow-hidden absolute w-full bg-neutral-900/95 backdrop-blur-sm shadow-lg'
           style={{ height: 0, opacity: 0, display: 'none' }}
           aria-label='Navegación móvil'
         >

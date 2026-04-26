@@ -121,7 +121,7 @@ export default function Shop() {
                       style={{ backgroundImage: `url(${product.hoverImage})` }}
                       aria-hidden='true'
                     ></div>
-                    <div className='relative z-10 bg-black/50 p-4 h-full flex flex-col justify-between'>
+                    <div className='relative z-10 bg-neutral-900/60 p-4 h-full flex flex-col justify-between'>
                       <div>
                         <h3
                           id={`product-title-${product.id}`}
