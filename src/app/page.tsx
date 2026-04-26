@@ -5,6 +5,7 @@ import AboutUs from '@/components/sections/AboutUs';
 import Shop from '@/components/sections/Shop';
 import Releases from '@/components/sections/Releases';
 import Press from '@/components/sections/Press';
+import UpcomingShows from '@/components/sections/UpcomingShows';
 
 export default function Home() {
   const ref = useRef(null);
@@ -16,6 +17,7 @@ export default function Home() {
       <AboutUs />
       <Press />
       <Shop />
+      <UpcomingShows />
     </div>
   );
 }
