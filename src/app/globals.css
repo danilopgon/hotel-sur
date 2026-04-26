@@ -15,11 +15,11 @@
   --color-communicator-dark: #000000;
 
   /* Fuentes */
-  --font-family: 'Eurostile-Medium', sans-serif;
-  --font-family-bold: 'Eurostile-Bold', sans-serif;
+  --font-family: var(--font-barlow), sans-serif;
+  --font-family-bold: var(--font-barlow-condensed), sans-serif;
   --font-size: 16px;
   --line-height: 1.5;
-  --letter-spacing: 0.2rem;
+  --letter-spacing: 0.1rem;
   --radius: 0.625rem;
 
   /* Mapeo de variables de Shadcn a nuestras variables base */
@@ -72,18 +72,6 @@
   --color-communicator-dark: var(--foreground);
 }
 
-@font-face {
-  font-family: 'Eurostile-Bold';
-  src: url('/fonts/eurostile-bold.otf');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Eurostile-Medium';
-  src: url('/fonts/eurostile-medium.otf');
-  font-weight: normal;
-}
 
 h1,
 h2,
