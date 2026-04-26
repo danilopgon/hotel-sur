@@ -116,6 +116,17 @@ export default function AboutUs() {
             allow='encrypted-media'
             loading='lazy'
           ></iframe>
+          <p className='mt-3 text-sm text-neutral-500'>
+            ¿No carga el reproductor?{' '}
+            <a
+              href='https://open.spotify.com/intl-es/artist/5ZsW4wbMl8qYFZ0L9xvBeu'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='text-primary hover:text-primary/80 transition-colors underline underline-offset-2'
+            >
+              Escúchanos en Spotify
+            </a>
+          </p>
         </div>
       </div>
     </section>

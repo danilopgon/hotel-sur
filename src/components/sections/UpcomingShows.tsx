@@ -35,6 +35,26 @@ const shows: Show[] = [
   },
 ];
 
+function OrbitalMotif() {
+  return (
+    <div
+      aria-hidden='true'
+      className='absolute right-0 bottom-0 translate-x-1/3 translate-y-1/3 w-[500px] h-[500px] opacity-20 pointer-events-none'
+    >
+      <svg
+        viewBox='0 0 500 500'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+        className='w-full h-full'
+      >
+        <circle cx='250' cy='250' r='240' stroke='#f55033' strokeWidth='1.5' />
+        <circle cx='250' cy='250' r='160' stroke='#f55033' strokeWidth='0.75' />
+        <circle cx='250' cy='250' r='90' stroke='#f55033' strokeWidth='0.75' />
+      </svg>
+    </div>
+  );
+}
+
 export default function UpcomingShows() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -106,7 +126,57 @@ export default function UpcomingShows() {
     return () => ctx.revert();
   }, [reduceMotion, isMobile]);
 
-  if (shows.length === 0) return null;
+  if (shows.length === 0) {
+    return (
+      <section
+        className='relative bg-neutral-900 py-24 px-6 md:px-12 overflow-hidden'
+        aria-labelledby='shows-title'
+      >
+        <OrbitalMotif />
+
+        <div className='max-w-7xl mx-auto relative z-10'>
+          <h2
+            id='shows-title'
+            className='text-3xl md:text-6xl font-bold uppercase text-primary mb-12'
+          >
+            Próximos conciertos
+          </h2>
+
+          <p className='text-2xl md:text-3xl text-neutral-100 max-w-xl leading-snug mb-3'>
+            Nuevas fechas próximamente.
+          </p>
+          <p className='text-lg text-neutral-400 max-w-xl mb-10'>
+            Mientras tanto, seguimos haciendo ruido donde toca.
+          </p>
+
+          <a
+            href='https://www.instagram.com/hotelsur/'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='inline-flex items-center gap-2 text-primary uppercase tracking-widest text-sm font-bold hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900'
+            aria-label='Seguir Hotel Sur en Instagram'
+          >
+            <span>@hotelsur en Instagram</span>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='14'
+              height='14'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              aria-hidden='true'
+            >
+              <path d='M7 7h10v10' />
+              <path d='M7 17L17 7' />
+            </svg>
+          </a>
+        </div>
+      </section>
+    );
+  }
 
   const show = shows[0];
 
@@ -116,7 +186,9 @@ export default function UpcomingShows() {
       className='relative bg-neutral-900 py-24 px-6 md:px-12 overflow-hidden'
       aria-labelledby='shows-title'
     >
-      <div className='max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center'>
+      <OrbitalMotif />
+
+      <div className='max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center relative z-10'>
         <div className='flex flex-col gap-8 order-2 md:order-1'>
           <h2
             ref={titleRef}
