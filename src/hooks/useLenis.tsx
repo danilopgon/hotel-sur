@@ -30,9 +30,11 @@ export function useLenis() {
 
     ScrollTrigger.scrollerProxy(document.body, {
       scrollTop(value) {
-        return typeof value !== 'undefined'
-          ? (lenis.scrollTo(value), null)
-          : lenis.scroll;
+        if (typeof value !== 'undefined') {
+          lenis.scrollTo(value);
+          return;
+        }
+        return lenis.scroll;
       },
       getBoundingClientRect() {
         return {
