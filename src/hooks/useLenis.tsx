@@ -32,7 +32,7 @@ export function useLenis() {
       scrollTop(value) {
         return typeof value !== 'undefined'
           ? (lenis.scrollTo(value), null)
-          : lenis.scroll.instance.scroll.y;
+          : lenis.scroll;
       },
       getBoundingClientRect() {
         return {
