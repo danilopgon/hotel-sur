@@ -13,6 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
 interface Show {
   id: string;
   date: string;
+  lastDate: Date;
   venue: string;
   city: string;
   time: string;
@@ -25,6 +26,7 @@ const shows: Show[] = [
   {
     id: 'los-clasicos-2026',
     date: '20 junio 2026',
+    lastDate: new Date('2026-06-21'),
     venue: 'Los Clásicos',
     city: 'Cuenca',
     time: '23:00h',
@@ -126,7 +128,10 @@ export default function UpcomingShows() {
     return () => ctx.revert();
   }, [reduceMotion, isMobile]);
 
-  if (shows.length === 0) {
+  const today = new Date();
+  const upcomingShows = shows.filter((s) => today <= s.lastDate);
+
+  if (upcomingShows.length === 0) {
     return (
       <section
         className='relative bg-neutral-900 py-24 px-6 md:px-12 overflow-hidden'
@@ -178,7 +183,7 @@ export default function UpcomingShows() {
     );
   }
 
-  const show = shows[0];
+  const show = upcomingShows[0];
 
   return (
     <section
