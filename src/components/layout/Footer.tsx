@@ -90,10 +90,31 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className='border-t border-primary mt-12 pt-8 text-center text-sm text-neutral-700'>
+        <div className='border-t border-primary mt-12 pt-8 text-center text-sm text-neutral-700 space-y-2'>
           <p>
             © {new Date().getFullYear()} Hotel Sur. Todos los derechos
             reservados.
+          </p>
+          <p>
+            Una pieza digital de{' '}
+            <a
+              href='https://danilopgon.com'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='font-medium text-neutral-900 hover:text-primary transition-colors'
+            >
+              Dani
+            </a>{' '}
+            ×{' '}
+            <a
+              href='https://grajoestudio.dev'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='font-medium text-neutral-900 hover:text-primary transition-colors'
+            >
+              Grajo Estudio
+            </a>
+            .
           </p>
         </div>
       </div>
