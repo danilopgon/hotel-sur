@@ -330,7 +330,7 @@ export default function ReservaCamiseta() {
                 <Button
                   type='submit'
                   disabled={isSubmitting}
-                  className='w-full bg-primary py-6 text-base font-bold uppercase text-white hover:bg-primary/90'
+                  className='w-full bg-primary py-6 text-base font-bold uppercase text-neutral-900 hover:bg-primary/90'
                 >
                   {isSubmitting ? 'Enviando...' : 'Reservar camiseta'}
                 </Button>

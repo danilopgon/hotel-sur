@@ -171,7 +171,7 @@ export default function Contacto() {
                 <Button
                   type='submit'
                   disabled={isSubmitting}
-                  className='w-full bg-primary py-6 text-base font-bold text-white hover:bg-primary/90'
+                  className='w-full bg-primary py-6 text-base font-bold text-neutral-900 hover:bg-primary/90'
                 >
                   {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
                 </Button>
