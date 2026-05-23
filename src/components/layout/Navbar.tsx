@@ -87,6 +87,7 @@ export default function Navbar() {
 
   const navItems = [
     { href: '/', label: 'Inicio' },
+    { href: '/reserva-camiseta', label: 'Camiseta' },
     { href: '/contacto', label: 'Contacto' },
   ];
 
