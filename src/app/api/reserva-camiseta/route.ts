@@ -60,9 +60,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const n8nResponse = await res.json().catch(() => null);
+
     return NextResponse.json({
-      message: 'Reserva enviada correctamente',
-      id: payload.id,
+      message:
+        n8nResponse?.message ?? 'Reserva enviada correctamente',
+      id: n8nResponse?.id ?? payload.id,
     });
   } catch (err) {
     clearTimeout(timeout);
