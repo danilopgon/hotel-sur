@@ -1,5 +1,9 @@
 ## Design Context
 
+## Register
+
+brand
+
 ### Project
 Official website for **Hotel Sur**, an alternative rock + electronics band from Tarancón (Cuenca), Spain. Founded 2019. Current release: *Sobre la Gravedad (Parte 1)* — nine songs exploring loss in its various forms. A second part is in development.
 
