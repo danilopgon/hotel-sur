@@ -11,32 +11,21 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { contactoSchema, type ContactoFormValues } from '@/lib/schemas/contacto';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Mail } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { z } from 'zod';
 
-const formSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: 'El nombre debe tener al menos 2 caracteres' }),
-  email: z.string().email({ message: 'Email inválido' }),
-  subject: z
-    .string()
-    .min(5, { message: 'El asunto debe tener al menos 5 caracteres' }),
-  message: z
-    .string()
-    .min(10, { message: 'El mensaje debe tener al menos 10 caracteres' }),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+const fieldClassName =
+  'border-neutral-700 bg-neutral-800 text-white placeholder:text-white/35';
 
 export default function Contacto() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<ContactoFormValues>({
+    resolver: zodResolver(contactoSchema),
     defaultValues: {
       name: '',
       email: '',
@@ -45,7 +34,7 @@ export default function Contacto() {
     },
   });
 
-  async function onSubmit(data: FormValues) {
+  async function onSubmit(data: ContactoFormValues) {
     setIsSubmitting(true);
 
     try {
@@ -72,17 +61,29 @@ export default function Contacto() {
   }
 
   return (
-    <div className='bg-neutral-900 text-white'>
-      <div className='container mx-auto px-4 py-20'>
-        <div className='relative z-10 min-h-screen flex justify-center items-center'>
-          <div className='max-w-4xl mx-auto'>
-            <h1 className='text-4xl font-bold mb-8 uppercase text-primary'>
+    <main className='min-h-screen bg-neutral-900 text-white'>
+      <section className='container mx-auto px-4 py-20 md:py-28'>
+        <div className='grid min-h-[70vh] gap-10 md:grid-cols-[0.7fr_1.3fr] md:items-center md:gap-16'>
+          <div className='max-w-sm'>
+            <p className='text-xs font-bold uppercase tracking-[0.2em] text-primary'>
               Contacto
-            </h1>
-            <p className='text-xl mb-8'>
-              Si quieres contactar con nosotros, puedes enviarnos un mensaje a
-              través de este formulario.
             </p>
+            <h1 className='mt-3 text-4xl font-bold uppercase leading-none text-primary md:text-6xl'>
+              Escríbenos
+            </h1>
+            <p className='mt-5 text-sm leading-relaxed text-white/65'>
+              Para contrataciones, prensa, colaboraciones o cualquier duda sobre
+              la banda y el merchandising.
+            </p>
+          </div>
+
+          <div className='rounded-md border border-neutral-700 bg-neutral-900/80 p-6 md:p-8'>
+            <div className='mb-7 flex items-center gap-3 text-primary'>
+              <Mail className='size-5' />
+              <h2 className='text-2xl font-bold uppercase md:text-3xl'>
+                Formulario de contacto
+              </h2>
+            </div>
 
             <Form {...form}>
               <form
@@ -94,12 +95,14 @@ export default function Contacto() {
                   name='name'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Nombre</FormLabel>
+                      <FormLabel className='text-xs uppercase tracking-wide text-white/70'>
+                        Nombre
+                      </FormLabel>
                       <FormControl>
                         <Input
                           placeholder='Tu nombre'
                           {...field}
-                          className='bg-neutral-800 border-neutral-700 text-white'
+                          className={fieldClassName}
                         />
                       </FormControl>
                       <FormMessage />
@@ -111,13 +114,15 @@ export default function Contacto() {
                   name='email'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel className='text-xs uppercase tracking-wide text-white/70'>
+                        Email
+                      </FormLabel>
                       <FormControl>
                         <Input
                           placeholder='tu@email.com'
                           type='email'
                           {...field}
-                          className='bg-neutral-800 border-neutral-700 text-white'
+                          className={fieldClassName}
                         />
                       </FormControl>
                       <FormMessage />
@@ -129,12 +134,14 @@ export default function Contacto() {
                   name='subject'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Asunto</FormLabel>
+                      <FormLabel className='text-xs uppercase tracking-wide text-white/70'>
+                        Asunto
+                      </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder='Asunto del mensaje'
+                          placeholder='Reserva, concierto, prensa...'
                           {...field}
-                          className='bg-neutral-800 border-neutral-700 text-white'
+                          className={fieldClassName}
                         />
                       </FormControl>
                       <FormMessage />
@@ -146,11 +153,13 @@ export default function Contacto() {
                   name='message'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Mensaje</FormLabel>
+                      <FormLabel className='text-xs uppercase tracking-wide text-white/70'>
+                        Mensaje
+                      </FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder='Escribe tu mensaje aquí'
-                          className='min-h-[150px] bg-neutral-800 border-neutral-700 text-white'
+                          placeholder='Cuéntanos qué necesitas'
+                          className={`min-h-[150px] ${fieldClassName}`}
                           {...field}
                         />
                       </FormControl>
@@ -162,7 +171,7 @@ export default function Contacto() {
                 <Button
                   type='submit'
                   disabled={isSubmitting}
-                  className='w-full'
+                  className='w-full bg-primary py-6 text-base font-bold text-neutral-900 hover:bg-primary/90'
                 >
                   {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
                 </Button>
@@ -170,7 +179,7 @@ export default function Contacto() {
             </Form>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

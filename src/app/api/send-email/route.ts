@@ -1,19 +1,12 @@
+import { contactoSchema } from '@/lib/schemas/contacto';
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import { z } from 'zod';
-
-const emailSchema = z.object({
-  name: z.string().min(2, 'El nombre es demasiado corto'),
-  email: z.string().email('Email inválido'),
-  subject: z.string().min(5, 'El asunto es demasiado corto'),
-  message: z.string().min(10, 'El mensaje es demasiado corto'),
-});
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const result = emailSchema.safeParse(body);
+    const result = contactoSchema.safeParse(body);
 
     if (!result.success) {
       return NextResponse.json(
@@ -22,7 +15,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { name, email, message, subject } = body;
+    const { name, email, message, subject } = result.data;
 
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
