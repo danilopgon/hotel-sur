@@ -1,3 +1,4 @@
+import { escapeHtml, sanitizeEmailHeader } from '@/lib/sanitize';
 import { contactoSchema } from '@/lib/schemas/contacto';
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
@@ -17,6 +18,10 @@ export async function POST(req: Request) {
 
     const { name, email, message, subject } = result.data;
 
+    const safeName = sanitizeEmailHeader(name);
+    const safeEmail = sanitizeEmailHeader(email);
+    const safeSubject = sanitizeEmailHeader(subject);
+
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
       port: Number(process.env.EMAIL_PORT),
@@ -32,12 +37,12 @@ export async function POST(req: Request) {
     const mailOptions = {
       from: `"Formulario Web Hotel Sur" <${process.env.EMAIL_USER}>`,
       to: 'somoshotelsur@gmail.com',
-      replyTo: email,
-      subject: `Contacto desde la web: ${subject}`,
+      replyTo: safeEmail,
+      subject: `Contacto desde la web: ${safeSubject}`,
       text: `
-        Nombre: ${name}
-        Email: ${email}
-        
+        Nombre: ${safeName}
+        Email: ${safeEmail}
+
         Mensaje:
         ${message}
       `,
@@ -45,15 +50,15 @@ export async function POST(req: Request) {
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #333;">Nuevo mensaje desde la web de Hotel Sur</h2>
           <hr style="border: 1px solid #eee;">
-          
-          <p><strong>Nombre:</strong> ${name}</p>
-          <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-          
+
+          <p><strong>Nombre:</strong> ${escapeHtml(safeName)}</p>
+          <p><strong>Email:</strong> <a href="mailto:${escapeHtml(safeEmail)}">${escapeHtml(safeEmail)}</a></p>
+
           <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin-top: 20px;">
             <p><strong>Mensaje:</strong></p>
-            <p>${message.replace(/\n/g, '<br>')}</p>
+            <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
           </div>
-          
+
           <hr style="border: 1px solid #eee; margin-top: 30px;">
           <p style="color: #777; font-size: 12px;">Este mensaje fue enviado desde el formulario de contacto de Hotel Sur.</p>
         </div>
