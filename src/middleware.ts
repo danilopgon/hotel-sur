@@ -5,17 +5,39 @@ const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 
 const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW_MS = 60_000;
+const CLEANUP_INTERVAL_MS = 60_000;
+let lastCleanupAt = 0;
+
+function cleanupExpiredEntries(now: number) {
+  if (now - lastCleanupAt < CLEANUP_INTERVAL_MS) return;
+  lastCleanupAt = now;
+  for (const [key, value] of rateLimitMap.entries()) {
+    if (now >= value.resetAt) rateLimitMap.delete(key);
+  }
+}
 
 function getRateLimitKey(req: NextRequest): string {
-  const forwarded = req.headers.get('x-forwarded-for');
-  const ip = forwarded ? forwarded.split(',')[0].trim() : 'unknown';
-  return ip;
+  // Prefer trusted platform-injected headers in order of reliability.
+  // x-forwarded-for is read last as it can be spoofed in some proxy setups.
+  const candidates = [
+    req.headers.get('x-real-ip'),
+    req.headers.get('cf-connecting-ip'),
+    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim(),
+  ];
+
+  const ip = candidates.find((v) => v && v.length > 0);
+
+  // Avoid grouping all anonymous clients under a single shared key.
+  return ip ?? `anon:${crypto.randomUUID()}`;
 }
 
 export function middleware(req: NextRequest) {
   if (req.nextUrl.pathname.startsWith('/api/')) {
     const key = getRateLimitKey(req);
     const now = Date.now();
+
+    cleanupExpiredEntries(now);
+
     const entry = rateLimitMap.get(key);
 
     if (!entry || now > entry.resetAt) {
