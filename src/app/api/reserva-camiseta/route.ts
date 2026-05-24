@@ -51,8 +51,6 @@ export async function POST(req: NextRequest) {
       signal: controller.signal,
     });
 
-    clearTimeout(timeout);
-
     if (!res.ok) {
       return NextResponse.json(
         { error: 'No se pudo registrar la reserva' },
@@ -63,17 +61,23 @@ export async function POST(req: NextRequest) {
     const n8nResponse = await res.json().catch(() => null);
 
     return NextResponse.json({
-      message:
-        n8nResponse?.message ?? 'Reserva enviada correctamente',
+      message: n8nResponse?.message ?? 'Reserva enviada correctamente',
       id: n8nResponse?.id ?? payload.id,
     });
   } catch (err) {
-    clearTimeout(timeout);
+    if (err instanceof Error && err.name === 'AbortError') {
+      return NextResponse.json(
+        { error: 'El servicio de reservas tardó demasiado en responder' },
+        { status: 504 },
+      );
+    }
     console.error('reserva-camiseta webhook error:', err);
 
     return NextResponse.json(
       { error: 'Error al contactar con el servicio de reservas' },
       { status: 500 },
     );
+  } finally {
+    clearTimeout(timeout);
   }
 }

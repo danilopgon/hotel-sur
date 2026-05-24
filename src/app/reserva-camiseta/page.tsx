@@ -160,7 +160,6 @@ export default function ReservaCamiseta() {
                 src='/images/fondo-hero.webp'
                 alt=''
                 fill
-                priority
                 sizes='(min-width: 768px) 48vw, 100vw'
                 className='object-cover opacity-55 saturate-150 contrast-125'
               />

@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { name, email, message, subject } = body;
+    const { name, email, message, subject } = result.data;
 
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
