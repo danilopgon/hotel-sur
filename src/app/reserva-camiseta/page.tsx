@@ -104,7 +104,7 @@ export default function ReservaCamiseta() {
             <div className='flex max-w-xs items-center gap-6 rounded-md border-2 border-primary px-6 py-5'>
               <span className='text-5xl font-bold text-primary'>15 €</span>
               <div className='text-xs uppercase leading-relaxed tracking-wide'>
-                <p className='text-white'>Precio final</p>
+                <p className='text-white'>Talla oversize</p>
               </div>
             </div>
 
