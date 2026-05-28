@@ -1,4 +1,5 @@
 'use client';
+import { RevealText } from '@/components/animations/RevealText';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
 import { gsap } from 'gsap';
@@ -30,7 +31,6 @@ const pressQuotes = [
 export default function Press() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const quotesRef = useRef<(HTMLLIElement | null)[]>([]);
   const reduceMotion = useReduceMotion();
   const isMobile = useIsMobile();
 
@@ -55,25 +55,6 @@ export default function Press() {
           },
         );
       }
-
-      quotesRef.current.forEach((el) => {
-        if (!el) return;
-        gsap.fromTo(
-          el,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: el,
-              start: 'top 90%',
-              end: 'top 60%',
-              scrub: true,
-            },
-          },
-        );
-      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -95,17 +76,20 @@ export default function Press() {
         </h2>
 
         <ul className='mt-16 divide-y divide-neutral-800'>
-          {pressQuotes.map(({ quote, source, date }, i) => (
+          {pressQuotes.map(({ quote, source, date }) => (
             <li
               key={source}
-              ref={(el) => {
-                quotesRef.current[i] = el;
-              }}
               className='py-10 md:py-12'
             >
               <div className='flex flex-col md:grid md:grid-cols-[1fr_180px] gap-6 md:gap-12'>
                 <blockquote className='text-xl md:text-2xl text-neutral-100 leading-relaxed'>
-                  &ldquo;{quote}&rdquo;
+                  <RevealText
+                    as='span'
+                    effect='per-word-crossfade'
+                    className='block'
+                  >
+                    {`“${quote}”`}
+                  </RevealText>
                 </blockquote>
                 <cite className='not-italic flex flex-col gap-1 md:text-right md:self-end shrink-0'>
                   <span className='text-sm font-bold uppercase tracking-widest text-primary'>

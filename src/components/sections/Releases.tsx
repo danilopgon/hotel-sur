@@ -1,5 +1,6 @@
 'use client';
 
+import { RevealText } from '@/components/animations/RevealText';
 import { ReleaseCard } from '@/components/blocks/ReleaseCard';
 import { musicReleases } from '@/data/musicReleases';
 
@@ -9,12 +10,14 @@ export default function Releases() {
       <div className='absolute inset-0 bg-neutral-900' />
 
       <div className='relative z-10 min-h-screen flex flex-col justify-center items-center p-6 py-12 md:p-12'>
-        <h2
+        <RevealText
+          as='h2'
           id='releases-title'
+          effect='mask-reveal-up'
           className='text-3xl md:text-6xl font-bold text-primary mb-4 md:mb-8 pb-2 uppercase tracking-tight'
         >
-          Singles de &quot;Sobre la Gravedad&quot;
-        </h2>
+          {'Singles de "Sobre la Gravedad"'}
+        </RevealText>
 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full md:auto-rows-[350px]'>
           {musicReleases.map((r) => (

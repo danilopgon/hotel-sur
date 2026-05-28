@@ -1,4 +1,5 @@
 'use client';
+import { RevealText } from '@/components/animations/RevealText';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { useReduceMotion } from '@/hooks/useReduceMotion';
@@ -16,6 +17,7 @@ export default function Hero() {
   const cloudRef = useRef<HTMLDivElement>(null);
   const grainRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReduceMotion();
   const isMobile = useIsMobile();
 
@@ -27,7 +29,8 @@ export default function Hero() {
     const grain = grainRef.current;
     const text = textRef.current;
 
-    if (!background || !sphere || !wrapper || !grain || !text) return;
+    const cta = ctaRef.current;
+    if (!background || !sphere || !wrapper || !grain || !text || !cta) return;
     if (reduceMotion) return;
 
     const initialScale = isMobile ? 1.7 : 1.3;
@@ -109,19 +112,8 @@ export default function Hero() {
         },
       );
 
-      gsap.fromTo(
-        text,
-        { opacity: 0, y: 50, scale: 0.9, filter: 'blur(10px)' },
-        {
-          opacity: 1,
-          filter: 'blur(0px)',
-          y: 0,
-          scale: 1,
-          duration: 1.5,
-          ease: 'power3.out',
-          delay: 0.2,
-        },
-      );
+      gsap.set(cta, { opacity: 0 });
+      gsap.to(cta, { opacity: 1, duration: 0.8, ease: 'power2.out', delay: 1.1 });
 
       gsap.to(text, {
         y: -150,
@@ -203,27 +195,37 @@ export default function Hero() {
 
       <div className='sticky top-0 w-full h-screen flex justify-center items-center p-6 md:p-12 z-30 pointer-events-none'>
         <div ref={textRef} className='text-center'>
-          <h1
+          <RevealText
+            as='h1'
             id='hero-title'
+            effect='soft-blur-in'
+            delay={0.2}
             className='text-4xl md:text-6xl 2xl:text-9xl font-bold uppercase text-primary'
           >
             Sobre La Gravedad
-          </h1>
-          <h2 className='text-xl md:text-4xl 2xl:text-6xl mt-6 uppercase text-primary'>
-            (Parte 1)
-          </h2>
-          <Button
-            asChild
-            className='mt-8 pointer-events-auto bg-primary hover:bg-primary/90 text-white uppercase font-bold'
+          </RevealText>
+          <RevealText
+            as='h2'
+            effect='soft-blur-in'
+            delay={0.4}
+            className='text-xl md:text-4xl 2xl:text-6xl mt-6 uppercase text-primary'
           >
-            <a
-              href='https://open.spotify.com/album/0KLgirssQr2u2wNDnaOOKb'
-              target='_blank'
-              rel='noopener noreferrer'
+            (Parte 1)
+          </RevealText>
+          <div ref={ctaRef} className='mt-8'>
+            <Button
+              asChild
+              className='pointer-events-auto bg-primary hover:bg-primary/90 text-white uppercase font-bold'
             >
-              Escuchar ahora
-            </a>
-          </Button>
+              <a
+                href='https://open.spotify.com/album/0KLgirssQr2u2wNDnaOOKb'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                Escuchar ahora
+              </a>
+            </Button>
+          </div>
         </div>
       </div>
     </section>

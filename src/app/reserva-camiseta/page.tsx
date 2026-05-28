@@ -1,5 +1,6 @@
 'use client';
 
+import { RevealText } from '@/components/animations/RevealText';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -91,15 +92,23 @@ export default function ReservaCamiseta() {
       <section className='container mx-auto px-4 pb-20 pt-20 md:pb-28 md:pt-28'>
         <div className='grid gap-14 md:grid-cols-[0.95fr_1.05fr] md:items-start md:gap-16 lg:gap-24'>
           <div className='flex flex-col gap-8'>
-            <p className='text-xs uppercase tracking-widest text-primary'>
+            <RevealText
+              as='p'
+              effect='per-word-crossfade'
+              delay={0}
+              className='text-xs uppercase tracking-widest text-primary'
+            >
               Edición bajo demanda
-            </p>
+            </RevealText>
 
-            <h1 className='text-5xl font-bold uppercase leading-[0.9] text-primary md:text-7xl 2xl:text-8xl'>
-              Reserva tu
-              <br />
-              camiseta
-            </h1>
+            <RevealText
+              as='h1'
+              effect='mask-reveal-up'
+              delay={0.15}
+              className='text-5xl font-bold uppercase leading-[0.9] text-primary md:text-7xl 2xl:text-8xl'
+            >
+              {'Reserva tu\ncamiseta'}
+            </RevealText>
 
             <div className='flex max-w-xs items-center gap-6 rounded-md border-2 border-primary px-6 py-5'>
               <span className='text-5xl font-bold text-primary'>15 €</span>
